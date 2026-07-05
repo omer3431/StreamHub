@@ -1,0 +1,12 @@
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+.card:hover {
+    outline: 2px solid #e50914;
+    cursor: pointer;
+}
+
+.navbar-brand {
+    letter-spacing: 1px;
+}

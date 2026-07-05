@@ -1,0 +1,83 @@
+@model List<Video>
+@{
+    ViewData["Title"] = "Browse";
+    var categories = (string[])ViewBag.Categories;
+    var selectedCategory = (string)ViewBag.SelectedCategory;
+    var continueWatching = (List<WatchHistory>)ViewBag.ContinueWatching;
+}
+
+<form method="get" class="row g-2 mb-4">
+    <div class="col-md-6">
+        <input type="text" name="search" value="@ViewBag.Search" class="form-control" placeholder="Search videos..." />
+    </div>
+    <div class="col-md-4">
+        <select name="category" class="form-select">
+            @foreach (var cat in categories)
+            {
+                <option value="@cat" selected="@(cat == selectedCategory ? "selected" : null)">@cat</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-danger w-100">Filter</button>
+    </div>
+</form>
+
+@if (continueWatching.Count > 0)
+{
+    <h4 class="mb-3">Continue Watching</h4>
+    <div class="row row-cols-2 row-cols-md-4 row-cols-lg-6 g-3 mb-4">
+        @foreach (var item in continueWatching)
+        {
+            <div class="col">
+                <a asp-controller="Video" asp-action="Details" asp-route-id="@item.VideoId" class="text-decoration-none text-light">
+                    <div class="card bg-secondary bg-opacity-25 border-0 h-100">
+                        @if (!string.IsNullOrEmpty(item.Video!.ThumbnailPath))
+                        {
+                            <img src="@item.Video.ThumbnailPath" class="card-img-top" style="aspect-ratio:16/9;object-fit:cover;" />
+                        }
+                        else
+                        {
+                            <div class="bg-black" style="aspect-ratio:16/9;"></div>
+                        }
+                        <div class="card-body p-2">
+                            <small class="text-truncate d-block">@item.Video.Title</small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+}
+
+<h4 class="mb-3">All Videos</h4>
+<div class="row row-cols-2 row-cols-md-4 row-cols-lg-6 g-3">
+    @foreach (var video in Model)
+    {
+        <div class="col">
+            <a asp-controller="Video" asp-action="Details" asp-route-id="@video.Id" class="text-decoration-none text-light">
+                <div class="card bg-secondary bg-opacity-25 border-0 h-100">
+                    @if (!string.IsNullOrEmpty(video.ThumbnailPath))
+                    {
+                        <img src="@video.ThumbnailPath" class="card-img-top" style="aspect-ratio:16/9;object-fit:cover;" />
+                    }
+                    else
+                    {
+                        <div class="bg-black d-flex align-items-center justify-content-center" style="aspect-ratio:16/9;">
+                            <span class="text-secondary">No thumbnail</span>
+                        </div>
+                    }
+                    <div class="card-body p-2">
+                        <small class="text-truncate d-block fw-semibold">@video.Title</small>
+                        <small class="text-muted">@video.Category &middot; @video.Views views</small>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+</div>
+
+@if (!Model.Any())
+{
+    <p class="text-muted mt-4">No videos found. Be the first to upload one!</p>
+}
