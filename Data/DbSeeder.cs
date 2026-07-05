@@ -68,11 +68,11 @@ public static class DbSeeder
             },
               new Video
             {
-                Title = "Mushoku tensei",
-                Description = "Reincarnated Jobless Man.",
+                Title = "Game play",
+                Description = "wuthering Waves new Character.",
                 Category = "Movies",
-                VideoPath = "/videos/Mushoku Tensei S3.mp4",
-                ThumbnailPath = "/thumbnails/jobless.jpg",
+                VideoPath = "/videos/game play.mp4",
+                ThumbnailPath = "/thumbnails/suisui.jpg",
                 UploadedById = systemUser.Id,
                 UploadDate = DateTime.UtcNow.AddDays(-10),
                 Views = 94
