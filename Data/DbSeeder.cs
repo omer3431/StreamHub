@@ -66,6 +66,17 @@ public static class DbSeeder
                 UploadDate = DateTime.UtcNow.AddDays(-10),
                 Views = 94
             },
+              new Video
+            {
+                Title = "Mushoku tensei",
+                Description = "Reincarnated Jobless Man.",
+                Category = "Movies",
+                VideoPath = "/videos/Mushoku Tensei S3.mp4",
+                ThumbnailPath = "/thumbnails/jobless.jpg",
+                UploadedById = systemUser.Id,
+                UploadDate = DateTime.UtcNow.AddDays(-10),
+                Views = 94
+            },
             new Video
             {
                 Title = "Jellyfish",
