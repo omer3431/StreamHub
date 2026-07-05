@@ -89,6 +89,11 @@ static string BuildNpgsqlConnectionString(string databaseUrl)
     var userInfo = uri.UserInfo.Split(':', 2);
     var database = uri.AbsolutePath.TrimStart('/');
 
-    return $"Host={uri.Host};Port={uri.Port};Database={database};" +
+    // Render's Internal Database URL often omits the port since it's the Postgres
+    // default. Uri.Port returns -1 in that case (since "postgresql" isn't a scheme
+    // .NET recognizes with a built-in default), so we fall back to 5432 ourselves.
+    var port = uri.Port == -1 ? 5432 : uri.Port;
+
+    return $"Host={uri.Host};Port={port};Database={database};" +
            $"Username={userInfo[0]};Password={userInfo[1]};SSL Mode=Require;Trust Server Certificate=true";
 }
